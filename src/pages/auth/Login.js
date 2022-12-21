@@ -7,10 +7,10 @@ import { FaGoogle } from "react-icons/fa";
 const Login = () => {
   return (
     <section className={`${styles.auth} container`}>
+      <div className={styles.img}>
+        <img src={loginImg} alt="login image" width="400px" />
+      </div>
       <Card>
-        <div className={styles.img}>
-          <img src={loginImg} alt="login image" width="400px" />
-        </div>
         <div className={`${styles.form}`}>
           <h2>Login</h2>
           <form>
