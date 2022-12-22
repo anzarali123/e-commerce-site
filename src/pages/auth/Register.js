@@ -37,11 +37,9 @@ const Register = () => {
 
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        const user = userCredential.user;
-        console.log(user);
         setLoading(false);
         toast.success("Your account has been created successfully...");
-        // navigate("/home");
+        navigate("/");
       })
       .catch((error) => {
         toast.error(error.message);
