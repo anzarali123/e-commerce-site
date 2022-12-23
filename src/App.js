@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router-dom";
-import { Header, Footer } from "./components";
+import { Header, Footer, AdminOnlyRoute } from "./components";
 import {
   Home,
   Contact,
@@ -8,6 +8,7 @@ import {
   Reset,
   OrderHistory,
   Cart,
+  Admin,
 } from "./pages";
 
 function App() {
@@ -22,6 +23,14 @@ function App() {
         <Route path="/reset" element={<Reset />} />
         <Route path="/order-history" element={<OrderHistory />} />
         <Route path="/cart" element={<Cart />} />
+        <Route
+          path="/admin/*"
+          element={
+            <AdminOnlyRoute>
+              <Admin />
+            </AdminOnlyRoute>
+          }
+        />
       </Routes>
       <Footer />
     </>

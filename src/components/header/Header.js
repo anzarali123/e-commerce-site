@@ -14,6 +14,7 @@ import {
   REMOVE_ACTIVE_USER,
 } from "../../redux/slice/authSlice";
 import ShowOnLogin, { ShowOnLogout } from "../hidden links/HiddenLinks";
+import { AdminOnlyLink } from "../adminOnlyRoute/AdminOnlyRoute";
 
 const logo = (
   <Link to="/">
@@ -51,6 +52,7 @@ const Header = () => {
         } else {
           setdisplayName(user.displayName);
         }
+
         dispatch(
           SET_ACTIVE_USER({
             email: user.email,
@@ -63,7 +65,7 @@ const Header = () => {
         dispatch(REMOVE_ACTIVE_USER());
       }
     });
-  }, []);
+  }, [dispatch, displayName]);
 
   const toggleMenu = () => {
     setShowMenu(!showMenu);
@@ -111,6 +113,14 @@ const Header = () => {
               <li className={styles["logo-mobile"]}>
                 {logo} <FaTimes size={22} color="#fff" onClick={hideMenu} />
               </li>
+              <li>
+                <AdminOnlyLink>
+                  <Link to="/admin/home">
+                    <button className="--btn --btn-primary">Admin</button>
+                  </Link>
+                </AdminOnlyLink>
+              </li>
+
               <li>
                 <NavLink to="/" className={activeLink}>
                   Home

@@ -1,7 +1,14 @@
-import React from "react";
+import { Slider } from "../../components";
+import AdminOnlyRoute from "../../components/adminOnlyRoute/AdminOnlyRoute";
 
 const Home = () => {
-  return <h1>Home</h1>;
+  return (
+    <>
+      {/* <Slider /> */}
+      <h1>Slider</h1>
+      {/* <AdminOnlyRoute /> */}
+    </>
+  );
 };
 
 export default Home;
