@@ -8,6 +8,12 @@ import "react-toastify/dist/ReactToastify.css";
 import { auth } from "../../firebase/config";
 import { signOut, onAuthStateChanged } from "firebase/auth";
 import Loader from "../loader/Loader";
+import { useDispatch } from "react-redux";
+import {
+  SET_ACTIVE_USER,
+  REMOVE_ACTIVE_USER,
+} from "../../redux/slice/authSlice";
+import ShowOnLogin, { ShowOnLogout } from "../hidden links/HiddenLinks";
 
 const logo = (
   <Link to="/">
@@ -31,15 +37,30 @@ const activeLink = ({ isActive }) => (isActive ? `${styles.active}` : ``);
 const Header = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [currentUser, setCurrentUser] = useState("");
+  const [displayName, setdisplayName] = useState("");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        setCurrentUser(user.email);
+        if (!user.displayName) {
+          const u1 = user.email.substring(0, user.email.indexOf("@"));
+          const uName = u1.charAt(0).toUpperCase() + u1.slice(1);
+          setdisplayName(uName);
+        } else {
+          setdisplayName(user.displayName);
+        }
+        dispatch(
+          SET_ACTIVE_USER({
+            email: user.email,
+            userName: user.displayName ? user.displayName : displayName,
+            userID: user.uid,
+          })
+        );
       } else {
-        setCurrentUser(null);
+        setdisplayName(null);
+        dispatch(REMOVE_ACTIVE_USER());
       }
     });
   }, []);
@@ -103,27 +124,28 @@ const Header = () => {
             </ul>
             <div className={styles["header-right"]} onClick={hideMenu}>
               <span className={styles.links}>
-                {!currentUser && (
+                <ShowOnLogout>
                   <NavLink className={activeLink} to="/login">
                     Login
                   </NavLink>
-                )}
-                {currentUser && (
-                  <a href="#">
-                    <FaUserCircle size={16} />
-                    {currentUser}
-                  </a>
-                )}
+                </ShowOnLogout>
 
-                {!currentUser && (
-                  <NavLink className={activeLink} to="/register">
-                    Register
+                <ShowOnLogin>
+                  <a href="#" style={{ color: "#ff7722" }}>
+                    <FaUserCircle size={16} />
+                    Hi, {displayName}
+                  </a>
+                </ShowOnLogin>
+
+                <ShowOnLogin>
+                  <NavLink className={activeLink} to="/order-history">
+                    My Orders
                   </NavLink>
-                )}
-                <NavLink className={activeLink} to="/order-history">
-                  My Orders
-                </NavLink>
-                {currentUser && <NavLink onClick={logoutUser}>Logout</NavLink>}
+                </ShowOnLogin>
+
+                <ShowOnLogin>
+                  <NavLink onClick={logoutUser}>Logout</NavLink>
+                </ShowOnLogin>
               </span>
               {cart}
             </div>

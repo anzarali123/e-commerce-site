@@ -1,6 +1,14 @@
 import { Route, Routes } from "react-router-dom";
 import { Header, Footer } from "./components";
-import { Home, Contact, Login, Register, Reset, OrderHistory } from "./pages";
+import {
+  Home,
+  Contact,
+  Login,
+  Register,
+  Reset,
+  OrderHistory,
+  Cart,
+} from "./pages";
 
 function App() {
   return (
@@ -13,6 +21,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/reset" element={<Reset />} />
         <Route path="/order-history" element={<OrderHistory />} />
+        <Route path="/cart" element={<Cart />} />
       </Routes>
       <Footer />
     </>
