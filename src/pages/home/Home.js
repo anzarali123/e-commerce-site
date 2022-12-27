@@ -1,12 +1,12 @@
 import { Slider } from "../../components";
-import AdminOnlyRoute from "../../components/adminOnlyRoute/AdminOnlyRoute";
+import { AdminOnlyRoute, Product } from "../../components/index";
 
 const Home = () => {
   return (
     <>
       {/* <Slider /> */}
-      <h1>Slider</h1>
       {/* <AdminOnlyRoute /> */}
+      <Product />
     </>
   );
 };

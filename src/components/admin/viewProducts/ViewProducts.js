@@ -15,53 +15,34 @@ import { Link } from "react-router-dom";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import { deleteObject, ref } from "firebase/storage";
 import Notiflix from "notiflix";
-import { useDispatch } from "react-redux";
-import { STORE_PRODUCTS } from "../../../redux/slice/productSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  selectProducts,
+  STORE_PRODUCTS,
+} from "../../../redux/slice/productSlice";
+import useFetchCollection from "../../../customHooks/useFetchCollection";
+
 const ViewProducts = () => {
-  const [products, setproducts] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const { data, loading } = useFetchCollection("products");
+  const products = useSelector(selectProducts);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    getProducts();
-  }, []);
-
-  const getProducts = () => {
-    setLoading(true);
-    try {
-      const productsRef = collection(db, "products");
-      const q = query(productsRef, orderBy("createdAt"));
-
-      onSnapshot(q, (snapshot) => {
-        const allProducts = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-        dispatch(
-          STORE_PRODUCTS({
-            products: allProducts,
-          })
-        );
-        setproducts(allProducts);
-      });
-      setLoading(false);
-    } catch (error) {
-      setLoading(false);
-      toast.error(error.message);
-    }
-  };
+    dispatch(
+      STORE_PRODUCTS({
+        products: data,
+      })
+    );
+  }, [data, dispatch]);
 
   const deleteProduct = async (id, imageURL) => {
-    setLoading(true);
     try {
       await deleteDoc(doc(db, "products", id));
       const storageRef = ref(storage, imageURL);
       await deleteObject(storageRef);
-      setLoading(false);
       toast.success("Product deleted successfully...");
     } catch (error) {
       toast.error(error.message);
-      setLoading(false);
     }
   };
 

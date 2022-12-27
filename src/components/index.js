@@ -10,3 +10,4 @@ export { default as Home } from "./admin/home/Home";
 export { default as Orders } from "./admin/orders/Orders";
 export { default as ViewProducts } from "./admin/viewProducts/ViewProducts";
 export { default as AddProduct } from "./admin/addProduct/AddProduct";
+export { default as Product } from "./product/Product";
