@@ -19,7 +19,7 @@ const Admin = () => {
           <Route path="home" element={<Home />} />
           <Route path="orders" element={<Orders />} />
           <Route path="all-products" element={<ViewProducts />} />
-          <Route path="add-product" element={<AddProduct />} />
+          <Route path="add-product/:id" element={<AddProduct />} />
         </Routes>
       </div>
     </div>

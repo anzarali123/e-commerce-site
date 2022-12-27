@@ -1,14 +1,26 @@
 import { useState, useEffect } from "react";
 import styles from "./ViewProducts.module.scss";
 import { toast } from "react-toastify";
-import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
-import { db } from "../../../firebase/config";
+import {
+  collection,
+  deleteDoc,
+  doc,
+  onSnapshot,
+  orderBy,
+  query,
+} from "firebase/firestore";
+import { db, storage } from "../../../firebase/config";
 import { Loader } from "../../index";
 import { Link } from "react-router-dom";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
+import { deleteObject, ref } from "firebase/storage";
+import Notiflix from "notiflix";
+import { useDispatch } from "react-redux";
+import { STORE_PRODUCTS } from "../../../redux/slice/productSlice";
 const ViewProducts = () => {
   const [products, setproducts] = useState([]);
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     getProducts();
@@ -25,7 +37,11 @@ const ViewProducts = () => {
           id: doc.id,
           ...doc.data(),
         }));
-        console.log(allProducts);
+        dispatch(
+          STORE_PRODUCTS({
+            products: allProducts,
+          })
+        );
         setproducts(allProducts);
       });
       setLoading(false);
@@ -33,6 +49,42 @@ const ViewProducts = () => {
       setLoading(false);
       toast.error(error.message);
     }
+  };
+
+  const deleteProduct = async (id, imageURL) => {
+    setLoading(true);
+    try {
+      await deleteDoc(doc(db, "products", id));
+      const storageRef = ref(storage, imageURL);
+      await deleteObject(storageRef);
+      setLoading(false);
+      toast.success("Product deleted successfully...");
+    } catch (error) {
+      toast.error(error.message);
+      setLoading(false);
+    }
+  };
+
+  const confirmDelete = (id, imageURL) => {
+    Notiflix.Confirm.show(
+      "Delete Product!!",
+      "You are about to delete this product?",
+      "Delete",
+      "Cancel",
+      function okCb() {
+        deleteProduct(id, imageURL);
+      },
+      function cancelCb() {
+        console.log("delete canceled");
+      },
+      {
+        width: "320px",
+        borderRadius: "3px",
+        titleColor: "Red",
+        okButtonBackground: "Red",
+        cssAnimationStyle: "zoom",
+      }
+    );
   };
 
   return (
@@ -71,12 +123,16 @@ const ViewProducts = () => {
                     <td>{name}</td>
                     <td>{category}</td>
                     <td>{`$${price}`}</td>
-                    <td>
-                      <Link to="/admin/add-product">
+                    <td className={styles.icon}>
+                      <Link to={`/admin/add-product/${id}`}>
                         <FaEdit size={20} color="green" />
                       </Link>
                       &nbsp;
-                      <FaTrashAlt size={20} color="red" />
+                      <FaTrashAlt
+                        size={20}
+                        color="red"
+                        onClick={() => confirmDelete(id, imageURL)}
+                      />
                     </td>
                   </tr>
                 );
