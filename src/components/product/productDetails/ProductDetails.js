@@ -35,7 +35,7 @@ const ProductDetails = () => {
       <div className={`${styles.product} container`}>
         <h2>Product Details</h2>
         <div>
-          <Link to="#/products">&larr; Back To Products</Link>
+          <Link to="/#products">&larr; Back To Products</Link>
         </div>
         {product === null ? (
           <img src={spinnerImg} alt="spinner" style={{ width: "50px" }} />
