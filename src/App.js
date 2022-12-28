@@ -1,5 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import { Header, Footer, AdminOnlyRoute } from "./components";
+import ProductDetails from "./components/product/productDetails/ProductDetails";
 import {
   Home,
   Contact,
@@ -31,6 +32,7 @@ function App() {
             </AdminOnlyRoute>
           }
         />
+        <Route path="/product-details/:id" element={<ProductDetails />} />
       </Routes>
       <Footer />
     </>

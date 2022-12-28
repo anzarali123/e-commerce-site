@@ -5,10 +5,9 @@ import { db } from "../firebase/config";
 
 const useFetchCollection = (collectionName) => {
   const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const getCollection = () => {
-    setLoading(true);
     try {
       const docRef = collection(db, collectionName);
       const q = query(docRef, orderBy("createdAt", "desc"));
