@@ -29,7 +29,7 @@ const productSlice = createSlice({
   },
 });
 
-export const { STORE_PRODUCTS } = productSlice.actions;
+export const { STORE_PRODUCTS, GET_PRICE_RANGE } = productSlice.actions;
 
 export const selectProducts = (state) => state.product.products;
 export const selectMinPrice = (state) => state.product.minPrice;
