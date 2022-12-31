@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 const AdminOnlyRoute = ({ children }) => {
   const userEmail = useSelector(selectUserEmail);
-  if (userEmail === "anzarali150799@gmail.com") {
+  if (userEmail === process.env.REACT_APP_ADMIN_USER) {
     return children;
   } else {
     return (
@@ -25,7 +25,7 @@ const AdminOnlyRoute = ({ children }) => {
 
 export const AdminOnlyLink = ({ children }) => {
   const userEmail = useSelector(selectUserEmail);
-  if (userEmail === "anzarali150799@gmail.com") {
+  if (userEmail === process.env.REACT_APP_ADMIN_USER) {
     return children;
   }
   return null;
