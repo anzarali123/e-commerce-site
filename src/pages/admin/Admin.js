@@ -6,6 +6,8 @@ import {
   Orders,
   ViewProducts,
 } from "../../components";
+import OrderDetails from "../../components/admin/orderDetails/OrderDetails";
+
 import styles from "./Admin.module.scss";
 
 const Admin = () => {
@@ -17,9 +19,10 @@ const Admin = () => {
       <div className={styles.content}>
         <Routes>
           <Route path="home" element={<Home />} />
-          <Route path="orders" element={<Orders />} />
           <Route path="all-products" element={<ViewProducts />} />
           <Route path="add-product/:id" element={<AddProduct />} />
+          <Route path="orders" element={<Orders />} />
+          <Route path="order-details/:id" element={<OrderDetails />} />
         </Routes>
       </div>
     </div>
