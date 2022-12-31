@@ -11,6 +11,9 @@ import {
   Cart,
   Admin,
 } from "./pages";
+import Checkout from "./pages/checkout/Checkout";
+import CheckoutDetails from "./pages/checkout/CheckoutDetails";
+import CheckoutSuccess from "./pages/checkout/CheckoutSuccess";
 
 function App() {
   return (
@@ -24,6 +27,9 @@ function App() {
         <Route path="/reset" element={<Reset />} />
         <Route path="/order-history" element={<OrderHistory />} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="/checkout-details" element={<CheckoutDetails />} />
+        <Route path="/checkout" element={<Checkout />} />
+        <Route path="/checkout-success" element={<CheckoutSuccess />} />
         <Route
           path="/admin/*"
           element={

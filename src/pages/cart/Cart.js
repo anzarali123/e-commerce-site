@@ -59,7 +59,6 @@ const Cart = () => {
       navigate("/login");
     }
   };
-
   return (
     <section>
       <div className={`container ${styles.table}`}>

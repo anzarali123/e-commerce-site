@@ -12,6 +12,8 @@ import {
 import { auth } from "../../firebase/config";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useSelector } from "react-redux";
+import { selectPreviousURL } from "../../redux/slice/cartSlice";
 
 const defaultState = {
   email: "",
@@ -21,7 +23,17 @@ const defaultState = {
 const Login = () => {
   const [user, setUser] = useState(defaultState);
   const [loading, setLoading] = useState(false);
+
   const navigate = useNavigate();
+  const previousURL = useSelector(selectPreviousURL);
+
+  const redirectUser = () => {
+    if (previousURL.includes("cart")) {
+      return navigate("/cart");
+    } else {
+      return navigate("/");
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -36,7 +48,7 @@ const Login = () => {
       .then((userCredential) => {
         setLoading(false);
         toast.success("Login Successfully...");
-        navigate("/");
+        redirectUser();
       })
       .catch((error) => {
         setLoading(false);
@@ -50,7 +62,7 @@ const Login = () => {
       .then((result) => {
         const user = result.user;
         toast.success("Login Successfully...");
-        navigate("/");
+        redirectUser();
       })
       .catch((error) => {
         toast.error(error.message);
