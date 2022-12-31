@@ -20,8 +20,8 @@ const Home = () => {
   };
   return (
     <>
-      {/* <Slider /> */}
-      {/* <AdminOnlyRoute /> */}
+      <Slider />
+      <AdminOnlyRoute />
       <Product />
     </>
   );

@@ -15,6 +15,7 @@ import {
 import Checkout from "./pages/checkout/Checkout";
 import CheckoutDetails from "./pages/checkout/CheckoutDetails";
 import CheckoutSuccess from "./pages/checkout/CheckoutSuccess";
+import NotFound from "./pages/notFound/NotFound";
 import OrderDetails from "./pages/orderDetails/OrderDetails";
 
 function App() {
@@ -44,6 +45,7 @@ function App() {
             </AdminOnlyRoute>
           }
         />
+        <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />
     </>
