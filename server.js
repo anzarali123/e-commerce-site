@@ -8,9 +8,9 @@ app.use(cors());
 app.use(express.json());
 
 const path = require("path");
-
+const __dirname1 = path.resolve();
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static("build"));
+  app.use(express.static(path.join(__dirname1, "/build")));
   app.get("*", (req, res) => {
     res.sendFile(path.resolve(__dirname, "build", "index.html"));
   });
