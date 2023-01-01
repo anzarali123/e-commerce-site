@@ -21,7 +21,6 @@ const Home = () => {
   return (
     <>
       <Slider />
-      <AdminOnlyRoute />
       <Product />
     </>
   );
