@@ -2,6 +2,7 @@
   "name": "shopeasy",
   "version": "0.1.0",
   "private": true,
+  "main": "server.js",
   "dependencies": {
     "@emailjs/browser": "^3.10.0",
     "@reduxjs/toolkit": "^1.9.1",
